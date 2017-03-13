@@ -1,0 +1,31 @@
+{
+  "name": "tumroomfinderapi",
+  "version": "0.1.0",
+  "description": "A small and ugly room finder REST Api for the TUM written in NodeJS",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yss14/TUMRoomFinderAPI.git"
+  },
+  "keywords": [
+    "tum",
+    "rest",
+    "room",
+    "roomfinder"
+  ],
+  "author": "Yannick Stachelscheid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yss14/TUMRoomFinderAPI/issues"
+  },
+  "homepage": "https://github.com/yss14/TUMRoomFinderAPI#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "express-query-int": "^1.0.1",
+    "morgan": "^1.8.1"
+  }
+}
