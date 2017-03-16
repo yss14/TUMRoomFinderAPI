@@ -3,4 +3,9 @@ module.exports = function (server) {
         request.body.roomID = roomID;
         next();
     });
+
+    server.param('building', function (request, response, next, building) {
+        request.body.building = building;
+        next();
+    });
 }
