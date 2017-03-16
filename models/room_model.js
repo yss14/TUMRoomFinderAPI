@@ -28,7 +28,6 @@ function getRoomInfoToday(query) {
     return new Promise((resolve, reject) => {
         var now = new Date();
         GeneralModelController.getEntriesForToday(query, now.toGermanDate(), postData).then((roomsWithEntries) => {
-            console.dir(roomsWithEntries);
             resolve(roomsWithEntries);
         }, (error) => {
             reject(error);
