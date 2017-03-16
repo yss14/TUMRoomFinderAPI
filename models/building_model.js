@@ -28,7 +28,18 @@ function getFreeRooms(building) {
         if (!found) {
             //Is there an entry for the building in the building map?
             if (BuildingMap.hasOwnProperty(building)) {
+                getAllRoomsForBuilding(BuildingMap[building]).then((data) => {
+                    if (!buildingDB.hasOwnProperty(building)) {
+                        buildingDB[building] = {};
+                    }
 
+                    buildingDB[building][DateFormatted.getToday()] = data;
+
+                    resolve(filterFreeRooms(data));
+                }, (error) => {
+                    console.error(error);
+                    reject(error);
+                });
             } else {
                 reject("Building not listed...");
             }
@@ -36,7 +47,7 @@ function getFreeRooms(building) {
     });
 }
 
-function getAllRoomsForBuilding(pBuilding) {
+function getAllRoomsForBuilding(pBuildingArea) {
     return new Promise((resolve, reject) => {
         var all = null;
         var todayGermany = new Date().toGermanDate();
@@ -80,8 +91,13 @@ function getAllRoomsForBuilding(pBuilding) {
         all = Promise.all(actions);
 
         all.then((collectedData) => {
-            console.dir(collectedData);
-            resolve();
+            var finalData = collectedData[0];
+
+            for (var i = 1; i < collectedData.length; i++) {
+                finalData.concat(collectedData[i]);
+            }
+
+            resolve(finalData);
         }, (error) => {
             console.error(error);
             reject("Can't fetch rooms for building...");
@@ -198,6 +214,27 @@ function performSearch(query, postData) {
 }
 
 function filterFreeRooms(roomList) {
+    var now = new Date();
+    roomList.forEach((room, idx) => {
+        var blocked = false;
+        for (let i = 0; i < room.times.length; i++) {
+            if (now.getTime() >= room.times[i].time.start && now.getTime() <= room.times[i].time.end) {
+                blocked = true;
+                break;
+            }
+        }
 
+        room.free = !blocked;
+    });
+
+    var freeRooms = [];
+
+    for (var i = 0; i < roomList.length; i++) {
+        if (roomList[i].free) {
+            freeRooms.push(roomList[i]);
+        }
+    }
+
+    return freeRooms;
 }
 

@@ -4,6 +4,15 @@ const server = express();
 const morgan = require('morgan');
 const queryParser = require('express-query-int');
 
+//Prototyping
+Date.prototype.toGermanDate = function () {
+    let day = this.getDate();
+    let month = this.getMonth() + 1;
+
+    return (day > 9 ? day : '0' + day) + '.' + (month > 9 ? month : '0' + month) + '.' +
+        this.getFullYear();
+}
+
 
 //set up express middleware
 server.use(morgan('dev', { immediate: false }));
