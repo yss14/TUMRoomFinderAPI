@@ -24,7 +24,7 @@ require('./router')(server);
 
 
 //Start server
-const SERVER_PORT = 8081;
+const SERVER_PORT = 8989;
 server.listen(SERVER_PORT, function () {
     console.log(`Server listen on Port ${SERVER_PORT}`);
 });
